@@ -9,7 +9,6 @@ const connectDB = async () => {
     try {
         await client.connect();
         dbInstance = client.db(); 
-        console.log(`Base de dades connectada correctament a MongoDB natiu`);
         return dbInstance;
     } catch (error) {
         console.error(`Error en connectar a MongoDB: ${error.message}`);

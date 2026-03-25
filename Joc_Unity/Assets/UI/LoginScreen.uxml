@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+>
+    <!-- Referència a l'arxiu d'estils CSS-like -->
+    <ui:Style src="LoginScreen.uss"/>
+
+    <ui:VisualElement name="main-container" class="main-container">
+        <ui:Label text="Autenticació" class="title-label" />
+        
+        <ui:TextField name="username-input" label="Usuari:" class="input-field" />
+        <ui:TextField name="password-input" label="Contrasenya:" password="true" class="input-field" />
+        
+        <ui:VisualElement name="buttons-container" class="buttons-container">
+            <ui:Button name="login-button" text="Login" class="action-button" />
+            <ui:Button name="register-button" text="Registrar" class="action-button" />
+        </ui:VisualElement>
+        
+        <ui:Label name="status-label" text="" class="status-label" />
+    </ui:VisualElement>
+</ui:UXML>

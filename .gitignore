@@ -1,30 +1,28 @@
-# ----------------------------------------------------------------------
-# Unity / Frontend
-# ----------------------------------------------------------------------
+# ==========================================
+# Unity - Ignorar TODO lo generado automáticamente
+# ==========================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uilds/
+/[Bb]uild/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
 
-# Carpetas generadas por Unity que NO deben subirse
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uilds/
-[Bb]uild/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
+# Regla universal para subcarpetas (Como tu carpeta Joc_Unity)
+**/[Ll]ibrary/
+**/[Tt]emp/
+**/[Oo]bj/
+**/[Bb]uild/
+**/[Uu]ser[Ss]ettings/
 
-# Capturas de memoria y grabaciones
-/[Mm]emoryCaptures/
-/[Rr]ecordings/
-
-# Archivos de caché de Visual Studio y proyectos autogenerados
-.vs/
-.gradle/
-ExportedObj/
-.consulo/
+# Archivos de configuración y esquemas (Los .xsd y .slnx de tu captura)
+*.xsd
+*.sln
+*.slnx
 *.csproj
 *.unityproj
-*.sln
 *.suo
-*.tmp
 *.user
 *.userprefs
 *.pidb
@@ -35,29 +33,23 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# Archivos meta generados por Unity que NO necesitamos
-*.pidb.meta
-*.pdb.meta
-*.mdb.meta
+# Carpetas de IDEs
+.vs/
+.idea/
+.vscode/
+.gradle/
 
-# Archivos de reportes de errores
-sysinfo.txt
-
-# Compilaciones
-*.apk
-*.aab
-*.unitypackage
-*.app
-
-# ----------------------------------------------------------------------
-# Node.js / Backend
-# ----------------------------------------------------------------------
-
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Archivos de entorno (¡MUY IMPORTANTE para no filtrar contraseñas!)
+# ==========================================
+# Backend / Node.js
+# ==========================================
+**/node_modules/
+npm-debug.log*
+yarn-error.log*
 .env
-.env.test
-.env.production
+.env.*
+
+# ==========================================
+# OS específicos
+# ==========================================
+.DS_Store
+Thumbs.db
