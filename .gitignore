@@ -44,3 +44,15 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+
+# ----------------------------------------------------------------------
+# Node.js / Backend
+# ----------------------------------------------------------------------
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Archivos de entorno (¡MUY IMPORTANTE para no filtrar contraseñas!)
+.env
+.env.test
+.env.production
