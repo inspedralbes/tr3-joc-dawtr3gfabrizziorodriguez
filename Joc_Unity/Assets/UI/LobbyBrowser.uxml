@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="MainContainer" style="flex-grow: 1; background-color: rgb(42, 42, 42); padding: 30px; justify-content: space-between;">
+        
+        <ui:VisualElement style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <ui:Label text="CERCA DE PARTIDES" style="-unity-font-style: bold; font-size: 28px; color: rgb(255, 193, 7);" />
+            <ui:Button text="Tornar al Menú" name="BtnBack" style="width: 150px; height: 40px; background-color: rgb(244, 67, 54); color: white; border-radius: 5px; -unity-font-style: bold;" />
+        </ui:VisualElement>
+
+        <ui:ScrollView name="LobbyList" style="flex-grow: 1; background-color: rgb(56, 56, 56); border-radius: 10px; margin-top: 20px; margin-bottom: 20px; padding: 15px;">
+            <ui:Label name="LoadingText" text="Carregant partides..." style="color: white; -unity-text-align: middle-center; margin-top: 20px; font-size: 16px; -unity-font-style: italic;" />
+        </ui:ScrollView>
+
+        <ui:VisualElement style="flex-direction: row; justify-content: flex-end;">
+            <ui:Button text="🔄 Actualitzar" name="BtnRefresh" style="width: 150px; height: 45px; background-color: rgb(158, 158, 158); color: white; border-radius: 5px; -unity-font-style: bold; margin-right: 15px;" />
+            <ui:Button text="➕ CREAR PARTIDA" name="BtnCreate" style="width: 200px; height: 45px; background-color: rgb(76, 175, 80); color: white; border-radius: 5px; -unity-font-style: bold;" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+    <ui:VisualElement name="CreateModal" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; display: none;">
+        <ui:VisualElement style="width: 400px; background-color: rgb(60, 60, 60); padding: 25px; border-radius: 12px; border-width: 2px; border-color: rgb(76, 175, 80);">
+            <ui:Label text="NOVA PARTIDA" style="-unity-font-style: bold; font-size: 22px; color: white; margin-bottom: 20px; -unity-text-align: middle-center;" />
+            
+            <ui:TextField name="InputLobbyName" label="Nom de la sala:" style="margin-bottom: 15px; color: white; -unity-font-style: bold;" />
+            <ui:TextField name="InputMaxPlayers" label="Jugadors (2-4):" value="4" style="margin-bottom: 25px; color: white; -unity-font-style: bold;" />
+            
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                <ui:Button name="BtnCancelCreate" text="Cancel·lar" style="width: 160px; height: 40px; background-color: rgb(244, 67, 54); color: white; border-radius: 5px; -unity-font-style: bold;" />
+                <ui:Button name="BtnConfirmCreate" text="✅ CREAR" style="width: 160px; height: 40px; background-color: rgb(76, 175, 80); color: white; border-radius: 5px; -unity-font-style: bold;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+</ui:UXML>

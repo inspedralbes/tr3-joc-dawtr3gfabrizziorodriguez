@@ -8,7 +8,7 @@ let dbInstance;
 const connectDB = async () => {
     try {
         await client.connect();
-        dbInstance = client.db(); 
+        dbInstance = client.db('JocBomba');
         return dbInstance;
     } catch (error) {
         console.error(`Error en connectar a MongoDB: ${error.message}`);

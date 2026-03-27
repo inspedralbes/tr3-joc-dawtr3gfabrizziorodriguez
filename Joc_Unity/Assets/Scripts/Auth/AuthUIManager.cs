@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement; // <-- 1. LIBRERÍA AÑADIDA PER A CANVIAR D'ESCENA
 
 namespace Auth
 {
@@ -163,6 +164,12 @@ namespace Auth
                     catch { }
 
                     UpdateStatus(successMsg, Color.green);
+
+                    // <-- 2. LA MÀGIA: SI ÉS LOGIN, CARREGUEM L'ESCENA DEL MENÚ
+                    if (endpoint == "/login")
+                    {
+                        SceneManager.LoadScene("Menu");
+                    }
                 }
             }
         }
