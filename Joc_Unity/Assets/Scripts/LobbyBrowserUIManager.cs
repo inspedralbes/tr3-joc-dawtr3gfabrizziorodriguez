@@ -14,6 +14,9 @@ namespace GameUI
     [Serializable]
     public class LobbyListWrapper { public List<LobbyData> lobbies; }
 
+    [Serializable]
+    public class CreateLobbyResponse { public string missatge; public string lobbyId; public string joinCode; }
+
     public class LobbyBrowserUIManager : MonoBehaviour
     {
         private ScrollView _lobbyList;
@@ -25,43 +28,78 @@ namespace GameUI
         private TextField _inputLobbyName, _inputMaxPlayers;
         private Button _btnCancelCreate, _btnConfirmCreate;
 
+        // Rutes de la API
         private string _apiUrlList = "http://localhost:3000/api/games/list";
         private string _apiUrlCreate = "http://localhost:3000/api/games/create";
+        private string _apiUrlJoin = "http://localhost:3000/api/games/join"; // <-- NOVA RUTA PER UNIR-SE
 
         private void OnEnable()
         {
             var root = GetComponent<UIDocument>()?.rootVisualElement;
             if (root == null) return;
             
-            // Enllaços principals
             _lobbyList = root.Q<ScrollView>("LobbyList");
             _loadingText = root.Q<Label>("LoadingText");
             _btnRefresh = root.Q<Button>("BtnRefresh");
             _btnBack = root.Q<Button>("BtnBack");
             _btnCreate = root.Q<Button>("BtnCreate");
 
-            // Enllaços del Modal
             _createModal = root.Q<VisualElement>("CreateModal");
             _inputLobbyName = root.Q<TextField>("InputLobbyName");
             _inputMaxPlayers = root.Q<TextField>("InputMaxPlayers");
             _btnCancelCreate = root.Q<Button>("BtnCancelCreate");
             _btnConfirmCreate = root.Q<Button>("BtnConfirmCreate");
 
-            // Events botons principals
             _btnBack.clicked += () => SceneManager.LoadScene("Menu");
             _btnRefresh.clicked += () => StartCoroutine(FetchLobbies());
             
-            // Mostrar/Ocultar Modal
             _btnCreate.clicked += () => _createModal.style.display = DisplayStyle.Flex;
             _btnCancelCreate.clicked += () => _createModal.style.display = DisplayStyle.None;
-            
-            // Confirmar creació
             _btnConfirmCreate.clicked += () => StartCoroutine(CreateLobbyRequest());
 
             StartCoroutine(FetchLobbies());
         }
 
-        // ----------- LÒGICA PER CREAR LA PARTIDA (NOU) -----------
+        // ----------- LÒGICA PER UNIR-SE A LA PARTIDA (NOU) -----------
+        private IEnumerator JoinLobbyRequest(string lobbyId, Button clickedButton)
+        {
+            clickedButton.text = "Unint-se...";
+            clickedButton.SetEnabled(false);
+
+            // Per ara usem un nom fix. Més endavant agafarem l'usuari que ha fet Login!
+            string username = "Fabrizzio_Jugador2"; 
+            
+            string json = $"{{\"lobbyId\":\"{lobbyId}\", \"username\":\"{username}\"}}";
+
+            using (UnityWebRequest request = new UnityWebRequest(_apiUrlJoin, "POST"))
+            {
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
+
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log("✅ T'has unit a la partida amb èxit!");
+                    
+                    // Guardem l'ID de la partida als PlayerPrefs per poder-lo usar després a la Sala d'Espera
+                    PlayerPrefs.SetString("CurrentLobbyId", lobbyId);
+                    PlayerPrefs.Save();
+                    
+                    // I finalment, carreguem la nova escena!
+                    SceneManager.LoadScene("SalaEspera");
+                }
+                else
+                {
+                    Debug.LogError("❌ Error al unir-se: " + request.downloadHandler.text);
+                    clickedButton.text = "ERROR";
+                }
+            }
+        }
+
+        // ----------- LÒGICA PER CREAR I LLISTAR PARTIDES -----------
         private IEnumerator CreateLobbyRequest()
         {
             _btnConfirmCreate.text = "Creant...";
@@ -70,8 +108,6 @@ namespace GameUI
             string lobbyName = _inputLobbyName.value;
             int maxPlayers = 4;
             int.TryParse(_inputMaxPlayers.value, out maxPlayers);
-
-            // Ara mateix posem un creador fix, més endavant usarem l'usuari real del Login!
             string creator = "Fabrizzio"; 
 
             string json = $"{{\"lobbyName\":\"{lobbyName}\", \"maxPlayers\":{maxPlayers}, \"createdBy\":\"{creator}\"}}";
@@ -85,26 +121,28 @@ namespace GameUI
 
                 yield return request.SendWebRequest();
 
-                if (request.result == UnityWebRequest.Result.Success)
-                {
-                    Debug.Log("✅ Partida creada amb èxit!");
-                    _createModal.style.display = DisplayStyle.None; // Amaguem el modal
-                    _inputLobbyName.value = ""; // Netegem el text
+                if (request.result == UnityWebRequest.Result.Success) {
+                    _createModal.style.display = DisplayStyle.None; 
+                    _inputLobbyName.value = ""; 
                     
-                    // Tornem a carregar la llista perquè aparegui la teva nova partida al moment!
-                    StartCoroutine(FetchLobbies()); 
-                }
-                else
-                {
+                    // Agafar la resposta (lobbyId i joinCode)
+                    CreateLobbyResponse responseDeServidor = JsonUtility.FromJson<CreateLobbyResponse>(request.downloadHandler.text);
+                    
+                    // Guardem l'ID per usar-lo als WebSockets
+                    PlayerPrefs.SetString("CurrentLobbyId", responseDeServidor.lobbyId);
+                    PlayerPrefs.SetString("CurrentLobbyCode", responseDeServidor.joinCode);
+                    PlayerPrefs.Save();
+                    
+                    // Carreguem la sala directament!
+                    SceneManager.LoadScene("SalaEspera");
+                } else {
                     Debug.LogError("❌ Error al crear: " + request.error);
                 }
-                
                 _btnConfirmCreate.text = "✅ CREAR";
                 _btnConfirmCreate.SetEnabled(true);
             }
         }
 
-        // ----------- LÒGICA PER LLISTAR PARTIDES (El que ja tenies) -----------
         private IEnumerator FetchLobbies()
         {
             _loadingText.style.display = DisplayStyle.Flex;
@@ -136,13 +174,10 @@ namespace GameUI
         private VisualElement CreateLobbyUIItem(LobbyData lobby)
         {
             var row = new VisualElement();
-            row.style.flexDirection = FlexDirection.Row;
-            row.style.justifyContent = Justify.SpaceBetween;
-            row.style.alignItems = Align.Center;
-            row.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+            row.style.flexDirection = FlexDirection.Row; row.style.justifyContent = Justify.SpaceBetween;
+            row.style.alignItems = Align.Center; row.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
             row.style.paddingTop = 10; row.style.paddingBottom = 10; row.style.paddingLeft = 15; row.style.paddingRight = 15;
             row.style.marginBottom = 10;
-            
             row.style.borderTopLeftRadius = 8; row.style.borderTopRightRadius = 8; row.style.borderBottomLeftRadius = 8; row.style.borderBottomRightRadius = 8;
 
             var infoLabel = new Label($"🎮 {lobby.lobbyName} | Host: {lobby.host} | Jugadors: {lobby.currentPlayers}/{lobby.maxPlayers}");
@@ -154,7 +189,8 @@ namespace GameUI
             joinBtn.style.color = Color.white; joinBtn.style.unityFontStyleAndWeight = FontStyle.Bold;
             joinBtn.style.paddingLeft = 15; joinBtn.style.paddingRight = 15;
             
-            joinBtn.clicked += () => { Debug.Log($"Intentant unir-se a ID: {lobby._id}"); };
+            // 👇 AQUÍ CONECTAMOS EL BOTÓN A LA FUNCIÓN DE UNIRSE 👇
+            joinBtn.clicked += () => StartCoroutine(JoinLobbyRequest(lobby._id, joinBtn));
 
             row.Add(infoLabel); row.Add(joinBtn);
             return row;

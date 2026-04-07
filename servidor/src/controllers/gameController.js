@@ -12,9 +12,13 @@ const createLobby = async (req, res) => {
         const db = getDB();
         const lobbiesCollection = db.collection('partides');
 
+        // Generar un codi de 6 lletres o números
+        const joinCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
         const newLobby = {
             lobbyName,
             maxPlayers: parseInt(maxPlayers),
+            joinCode: joinCode,
             currentPlayers: 1,
             host: createdBy,
             players: [createdBy],
@@ -23,7 +27,7 @@ const createLobby = async (req, res) => {
         };
 
         const result = await lobbiesCollection.insertOne(newLobby);
-        res.status(201).json({ missatge: "Partida creada", lobbyId: result.insertedId });
+        res.status(201).json({ missatge: "Partida creada", lobbyId: result.insertedId, joinCode: joinCode });
     } catch (error) {
         res.status(500).json({ error: "Error intern" });
     }
