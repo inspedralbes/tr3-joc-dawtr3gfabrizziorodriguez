@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Tilemaps; // 👈 IMPORTANTE
 
 public class BombController : MonoBehaviour
 {
     [Header("Bomb")]
-    public KeyCode inputKey = KeyCode.Space;
+    public KeyCode inputKey = KeyCode.LeftShift;
     public GameObject bombPrefab;
     public float bombFuseTime = 3f;
     public int bombAmount = 1;
@@ -17,7 +17,7 @@ public class BombController : MonoBehaviour
     public float explosionDuration = 1f;
     public int explosionRadius = 1;
 
-    [Header("Destructible")]
+    [Header("Destructible")] // 👈 NUEVO
     public Tilemap destructibleTiles;
     public Destructible destructiblePrefab;
 
@@ -36,8 +36,8 @@ public class BombController : MonoBehaviour
     private IEnumerator PlaceBomb()
     {
         Vector2 position = transform.position;
-        position.x = Mathf.Round(position.x);
-        position.y = Mathf.Round(position.y);
+        position.x = Mathf.Round(position.x) + 0.5f;
+        position.y = Mathf.Round(position.y) + 0.5f;
 
         GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
         bombsRemaining--;
@@ -45,8 +45,6 @@ public class BombController : MonoBehaviour
         yield return new WaitForSeconds(bombFuseTime);
 
         position = bomb.transform.position;
-        position.x = Mathf.Round(position.x);
-        position.y = Mathf.Round(position.y);
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
         explosion.SetActiveRenderer(explosion.start);
@@ -63,15 +61,13 @@ public class BombController : MonoBehaviour
 
     private void Explode(Vector2 position, Vector2 direction, int length)
     {
-        if (length <= 0) {
-            return;
-        }
+        if (length <= 0) return;
 
         position += direction;
 
         if (Physics2D.OverlapBox(position, Vector2.one / 2f, 0f, explosionLayerMask))
         {
-            ClearDestructible(position);
+            ClearDestructible(position); // 👈 NUEVO
             return;
         }
 
@@ -83,6 +79,7 @@ public class BombController : MonoBehaviour
         Explode(position, direction, length - 1);
     }
 
+    // 👇 MÉTODO NUEVO
     private void ClearDestructible(Vector2 position)
     {
         Vector3Int cell = destructibleTiles.WorldToCell(position);
@@ -107,5 +104,4 @@ public class BombController : MonoBehaviour
             other.isTrigger = false;
         }
     }
-
 }

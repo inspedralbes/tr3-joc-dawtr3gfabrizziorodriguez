@@ -31,7 +31,14 @@ public class MovementController : MonoBehaviour
         rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         Debug.Log("MovementController OK: " + gameObject.name);
 
-        // Arranca con el renderer de abajo activo (idle), rest desactivados
+        // --- SOLUCIÓN: Apagamos TODOS los sprites explícitamente al inicio ---
+        if (spriteRendererUp != null) spriteRendererUp.gameObject.SetActive(false);
+        if (spriteRendererLeft != null) spriteRendererLeft.gameObject.SetActive(false);
+        if (spriteRendererRight != null) spriteRendererRight.gameObject.SetActive(false);
+        if (spriteRendererDown != null) spriteRendererDown.gameObject.SetActive(false);
+        // ----------------------------------------------------------------------
+
+        // Arranca con el renderer de abajo activo (idle), asegurando un inicio limpio
         SetDirection(Vector2.zero, spriteRendererDown);
     }
 
@@ -49,6 +56,7 @@ public class MovementController : MonoBehaviour
             SetDirection(Vector2.zero, activeSpriteRenderer);
         }
 
+        // Mueve el personaje basado en la dirección calculada
         transform.Translate(direction * speed * Time.deltaTime);
     }
 

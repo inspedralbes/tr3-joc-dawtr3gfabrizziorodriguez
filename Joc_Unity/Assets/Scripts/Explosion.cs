@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour
@@ -9,25 +8,20 @@ public class Explosion : MonoBehaviour
 
     public void SetActiveRenderer(AnimatedSpriteRenderer renderer)
     {
-        start.enabled  = (renderer == start);
-        middle.enabled = (renderer == middle);
-        end.enabled    = (renderer == end);
+        start.enabled = renderer == start;
+        middle.enabled = renderer == middle;
+        end.enabled = renderer == end;
     }
 
     public void SetDirection(Vector2 direction)
     {
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        float angle = Mathf.Atan2(direction.y, direction.x);
+        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
     }
 
-    public void DestroyAfter(float duration)
+    public void DestroyAfter(float seconds)
     {
-        StartCoroutine(DestroyAfterRoutine(duration));
+        Destroy(gameObject, seconds);
     }
 
-    private IEnumerator DestroyAfterRoutine(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        Destroy(gameObject);
-    }
 }
