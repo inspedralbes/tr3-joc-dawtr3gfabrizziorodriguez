@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Tilemaps; // 👈 IMPORTANTE
+using UnityEngine.Tilemaps;
 
 public class BombController : MonoBehaviour
 {
     [Header("Bomb")]
-    public KeyCode inputKey = KeyCode.LeftShift;
+    public KeyCode inputKey = KeyCode.Space;
     public GameObject bombPrefab;
     public float bombFuseTime = 3f;
     public int bombAmount = 1;
@@ -17,7 +17,7 @@ public class BombController : MonoBehaviour
     public float explosionDuration = 1f;
     public int explosionRadius = 1;
 
-    [Header("Destructible")] // 👈 NUEVO
+    [Header("Destructible")]
     public Tilemap destructibleTiles;
     public Destructible destructiblePrefab;
 
@@ -26,10 +26,26 @@ public class BombController : MonoBehaviour
         bombsRemaining = bombAmount;
     }
 
+    // Cridat externament pel GameManager (si rep el packet de network)
+    public void RemotePlaceBomb()
+    {
+        if (bombsRemaining > 0)
+        {
+            StartCoroutine(PlaceBomb());
+        }
+    }
+
     private void Update()
     {
-        if (bombsRemaining > 0 && Input.GetKeyDown(inputKey)) {
+        if (bombsRemaining > 0 && Input.GetKeyDown(inputKey)) 
+        {
             StartCoroutine(PlaceBomb());
+
+            // Si hi ha GameManager habilitat a la mateixa scene i soc local, notificar
+            if (GameManager.Instance != null && enabled)
+            {
+                GameManager.Instance.NotifyBombPlaced();
+            }
         }
     }
 
@@ -67,7 +83,7 @@ public class BombController : MonoBehaviour
 
         if (Physics2D.OverlapBox(position, Vector2.one / 2f, 0f, explosionLayerMask))
         {
-            ClearDestructible(position); // 👈 NUEVO
+            ClearDestructible(position);
             return;
         }
 
@@ -79,7 +95,6 @@ public class BombController : MonoBehaviour
         Explode(position, direction, length - 1);
     }
 
-    // 👇 MÉTODO NUEVO
     private void ClearDestructible(Vector2 position)
     {
         Vector3Int cell = destructibleTiles.WorldToCell(position);

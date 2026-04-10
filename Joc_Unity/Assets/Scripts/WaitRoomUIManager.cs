@@ -45,7 +45,20 @@ namespace GameUI
                 _btnStartGame = root.Q<Button>("BtnStartGame");
 
                 if (_btnLeave     != null) _btnLeave.clicked     += LeaveRoom;
-                if (_btnStartGame != null) _btnStartGame.clicked += StartGame;
+                
+                if (_btnStartGame != null) 
+                {
+                    // Només el Host (PlayerIndex = 1) pot veure el botó i començar
+                    if (PlayerPrefs.GetInt("PlayerIndex", 0) == 1)
+                    {
+                        _btnStartGame.style.display = DisplayStyle.Flex;
+                        _btnStartGame.clicked += StartGame;
+                    }
+                    else
+                    {
+                        _btnStartGame.style.display = DisplayStyle.None;
+                    }
+                }
             }
 
             _lobbyId    = PlayerPrefs.GetString("CurrentLobbyId",   "");

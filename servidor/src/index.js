@@ -39,7 +39,7 @@ const startServer = async () => {
                 try { msg = JSON.parse(rawData.toString()); }
                 catch (e) { return; }
 
-                // ── JOIN ROOM ──────────────────────────────────────────
+                // ── JOIN ROOM (SALA D'ESPERA) ──────────────────────────
                 if (msg.type === 'join_room') {
                     const { lobbyId, username, maxPlayers } = msg;
                     currentLobby    = lobbyId;
@@ -51,16 +51,17 @@ const startServer = async () => {
 
                     const room = rooms.get(lobbyId);
 
-                    // Assignar índex (1-based) segons l'ordre d'entrada
                     currentIndex = room.players.length + 1;
                     room.players.push({ ws, username, index: currentIndex });
 
                     console.log(`👤 [${currentIndex}] ${username} s'ha unit a la sala: ${lobbyId}`);
 
-                    // Dir al client quin índex li ha tocat
                     ws.send(JSON.stringify({ type: 'you_are', index: currentIndex }));
 
-                    // Avisar a la resta
+                    room.players.forEach(p => {
+                        ws.send(JSON.stringify({ type: 'player_joined', username: p.username, index: p.index }));
+                    });
+
                     room.players.forEach(p => {
                         if (p.ws !== ws && p.ws.readyState === 1) {
                             p.ws.send(JSON.stringify({ type: 'player_joined', username, index: currentIndex }));
@@ -75,13 +76,40 @@ const startServer = async () => {
                     if (!room) return;
 
                     const maxPlayers = room.maxPlayers;
-                    console.log(`🚀 Partida iniciada a la sala: ${lobbyId} (maxPlayers: ${maxPlayers})`);
+                    console.log(`🚀 Partida iniciada a la sala: ${lobbyId}`);
 
                     room.players.forEach(p => {
                         if (p.ws.readyState === 1) {
                             p.ws.send(JSON.stringify({ type: 'game_started', maxPlayers }));
                         }
                     });
+                }
+
+                // ── GAME JOIN (PARTIDA) ────────────────────────────────
+                if (msg.type === 'game_join') {
+                    const { lobbyId, playerIndex } = msg;
+                    currentLobby = lobbyId;
+                    
+                    if (!rooms.has(lobbyId)) {
+                        rooms.set(lobbyId, { players: [], maxPlayers: 4 });
+                    }
+                    const room = rooms.get(lobbyId);
+
+                    if (!room.players.find(p => p.ws === ws)) {
+                        room.players.push({ ws, index: playerIndex, username: currentUsername || "Jugador" });
+                    }
+                }
+
+                // ── MOUSE/MOVE/BOMB (BROADCAST) ────────────────────────
+                if (msg.type === 'player_move' || msg.type === 'place_bomb') {
+                    const room = rooms.get(currentLobby);
+                    if (room) {
+                        room.players.forEach(p => {
+                            if (p.ws !== ws && p.ws.readyState === 1) {
+                                p.ws.send(JSON.stringify(msg));
+                            }
+                        });
+                    }
                 }
             });
 
