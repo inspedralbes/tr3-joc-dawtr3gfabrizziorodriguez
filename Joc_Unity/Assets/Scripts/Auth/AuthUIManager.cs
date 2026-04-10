@@ -165,9 +165,11 @@ namespace Auth
 
                     UpdateStatus(successMsg, Color.green);
 
-                    // <-- 2. LA MÀGIA: SI ÉS LOGIN, CARREGUEM L'ESCENA DEL MENÚ
+                    // <-- 2. LA MÀGIA: SI ÉS LOGIN, GUARDEM L'USUARI I CARREGUEM EL MENÚ
                     if (endpoint == "/login")
                     {
+                        PlayerPrefs.SetString("Username", username);
+                        PlayerPrefs.Save();
                         SceneManager.LoadScene("Menu");
                     }
                 }

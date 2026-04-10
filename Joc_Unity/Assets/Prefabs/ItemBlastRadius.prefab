@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8563969624482747678}
   - component: {fileID: 2254404819280260292}
   - component: {fileID: 2117319318639702884}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ItemBlastRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
