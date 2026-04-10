@@ -15,6 +15,7 @@ public class MovementController : MonoBehaviour
     public AnimatedSpriteRenderer spriteRendererDown;
     public AnimatedSpriteRenderer spriteRendererLeft;
     public AnimatedSpriteRenderer spriteRendererRight;
+    public AnimatedSpriteRenderer spriteRendererDeath;
     private AnimatedSpriteRenderer activeSpriteRenderer;
 
     private void Awake()
@@ -29,21 +30,20 @@ public class MovementController : MonoBehaviour
 
         rigidbody.sleepMode = RigidbodySleepMode2D.NeverSleep;
         rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Debug.Log("MovementController OK: " + gameObject.name);
 
-        // --- SOLUCIÓN: Apagamos TODOS los sprites explícitamente al inicio ---
         if (spriteRendererUp != null) spriteRendererUp.gameObject.SetActive(false);
         if (spriteRendererLeft != null) spriteRendererLeft.gameObject.SetActive(false);
         if (spriteRendererRight != null) spriteRendererRight.gameObject.SetActive(false);
         if (spriteRendererDown != null) spriteRendererDown.gameObject.SetActive(false);
-        // ----------------------------------------------------------------------
+        if (spriteRendererDeath != null) spriteRendererDeath.gameObject.SetActive(false);
 
-        // Arranca con el renderer de abajo activo (idle), asegurando un inicio limpio
         SetDirection(Vector2.zero, spriteRendererDown);
     }
 
     private void Update()
     {
+        if (!enabled) return; 
+
         if (Input.GetKey(inputUp)) {
             SetDirection(Vector2.up, spriteRendererUp);
         } else if (Input.GetKey(inputDown)) {
@@ -56,7 +56,6 @@ public class MovementController : MonoBehaviour
             SetDirection(Vector2.zero, activeSpriteRenderer);
         }
 
-        // Mueve el personaje basado en la dirección calculada
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
@@ -64,7 +63,6 @@ public class MovementController : MonoBehaviour
     {
         direction = newDirection;
 
-        // Si cambia el renderer activo, desactiva el anterior y activa el nuevo
         if (activeSpriteRenderer != spriteRenderer)
         {
             if (activeSpriteRenderer != null)
@@ -79,8 +77,36 @@ public class MovementController : MonoBehaviour
                 activeSpriteRenderer.gameObject.SetActive(true);
         }
 
-        // Idle si no hay dirección, animación si la hay
         if (activeSpriteRenderer != null)
             activeSpriteRenderer.idle = (newDirection == Vector2.zero);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Explosion")) {
+            DeathSequence();
+        }
+    }
+
+    private void DeathSequence()
+    {
+        enabled = false;
+        BombController bomb = GetComponent<BombController>();
+        if (bomb != null) bomb.enabled = false;
+        if (spriteRendererUp != null) spriteRendererUp.gameObject.SetActive(false);
+        if (spriteRendererDown != null) spriteRendererDown.gameObject.SetActive(false);
+        if (spriteRendererLeft != null) spriteRendererLeft.gameObject.SetActive(false);
+        if (spriteRendererRight != null) spriteRendererRight.gameObject.SetActive(false);
+
+        if (spriteRendererDeath != null)
+            spriteRendererDeath.gameObject.SetActive(true);
+
+        Invoke(nameof(OnDeathSequenceEnded), 1.25f);
+    }
+
+    private void OnDeathSequenceEnded()
+    {
+        gameObject.SetActive(false);
+        GameManager.Instance.CheckWinState();
+    }   
 }
