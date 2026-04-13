@@ -37,8 +37,8 @@ const createLobby = async (req, res) => {
 const getAllLobbies = async (req, res) => {
     try {
         const db = getDB();
-        // Busquem només les que estan en espera de jugadors
-        const lobbies = await db.collection('partides').find({ status: 'waiting' }).toArray();
+        // Busquem les últimes 50 partides sense filtrar només per waiting
+        const lobbies = await db.collection('partides').find().sort({createdAt: -1}).limit(50).toArray();
         res.status(200).json(lobbies);
     } catch (error) {
         res.status(500).json({ error: "Error al llistar partides" });

@@ -175,15 +175,29 @@ namespace GameUI
             var infoLabel = new Label($"🎮 {lobby.lobbyName} | Host: {lobby.host} | Jugadors: {lobby.currentPlayers}/{lobby.maxPlayers}");
             infoLabel.style.color = Color.white; infoLabel.style.fontSize = 14; infoLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
 
-            var joinBtn = new Button();
-            joinBtn.text = "UNIR-SE";
-            joinBtn.style.backgroundColor = new StyleColor(new Color(0f, 0.6f, 1f));
-            joinBtn.style.color = Color.white; joinBtn.style.unityFontStyleAndWeight = FontStyle.Bold;
-            joinBtn.style.paddingLeft = 15; joinBtn.style.paddingRight = 15;
-            
-            joinBtn.clicked += () => StartCoroutine(JoinLobbyRequest(lobby._id, joinBtn));
+            row.Add(infoLabel);
 
-            row.Add(infoLabel); row.Add(joinBtn);
+            if (lobby.status == "waiting" && lobby.currentPlayers < lobby.maxPlayers)
+            {
+                var joinBtn = new Button();
+                joinBtn.text = "UNIR-SE";
+                joinBtn.style.backgroundColor = new StyleColor(new Color(0f, 0.6f, 1f));
+                joinBtn.style.color = Color.white; joinBtn.style.unityFontStyleAndWeight = FontStyle.Bold;
+                joinBtn.style.paddingLeft = 15; joinBtn.style.paddingRight = 15;
+                joinBtn.clicked += () => StartCoroutine(JoinLobbyRequest(lobby._id, joinBtn));
+                row.Add(joinBtn);
+            }
+            else
+            {
+                var tagBtn = new Button();
+                tagBtn.text = lobby.status == "playing" ? "JUGANDO" : (lobby.status == "finished" ? "ACABADO" : "LLENO");
+                tagBtn.SetEnabled(false);
+                tagBtn.style.backgroundColor = new StyleColor(Color.gray);
+                tagBtn.style.color = Color.white; tagBtn.style.unityFontStyleAndWeight = FontStyle.Bold;
+                tagBtn.style.paddingLeft = 15; tagBtn.style.paddingRight = 15;
+                row.Add(tagBtn);
+            }
+
             return row;
         }
     }

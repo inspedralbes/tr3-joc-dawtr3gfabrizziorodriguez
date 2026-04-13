@@ -165,6 +165,7 @@ namespace GameUI
                 if (!string.IsNullOrEmpty(username))
                 {
                     _playersToAdd.Enqueue($"[P{idx}] {username}");
+                    PlayerPrefs.SetString("PlayerName_" + idx, username);
                     Debug.Log($"👤 NOU JUGADOR P{idx}: {username}");
                 }
             }

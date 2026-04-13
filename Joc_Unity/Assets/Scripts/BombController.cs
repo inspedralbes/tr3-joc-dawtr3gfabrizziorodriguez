@@ -63,6 +63,7 @@ public class BombController : MonoBehaviour
         position = bomb.transform.position;
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+        explosion.owner = gameObject;
         explosion.SetActiveRenderer(explosion.start);
         explosion.DestroyAfter(explosionDuration);
 
@@ -88,6 +89,7 @@ public class BombController : MonoBehaviour
         }
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+        explosion.owner = gameObject;
         explosion.SetActiveRenderer(length > 1 ? explosion.middle : explosion.end);
         explosion.SetDirection(direction);
         explosion.DestroyAfter(explosionDuration);

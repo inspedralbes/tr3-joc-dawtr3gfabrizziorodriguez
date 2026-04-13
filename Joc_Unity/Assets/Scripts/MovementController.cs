@@ -5,6 +5,7 @@ public class MovementController : MonoBehaviour
     public new Rigidbody2D rigidbody { get; private set; }
     private Vector2 direction = Vector2.zero;
     public float speed = 5f;
+    private GameObject lastKiller;
 
     public KeyCode inputUp    = KeyCode.W;
     public KeyCode inputDown  = KeyCode.S;
@@ -101,6 +102,8 @@ public class MovementController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Explosion")) {
+            Explosion exp = other.GetComponent<Explosion>();
+            if (exp != null) lastKiller = exp.owner;
             DeathSequence();
         }
     }
@@ -126,7 +129,7 @@ public class MovementController : MonoBehaviour
     {
         gameObject.SetActive(false);
         if (GameManager.Instance != null) {
-            GameManager.Instance.CheckWinState();
+            GameManager.Instance.OnPlayerDied(gameObject, lastKiller);
         }
     }   
 }

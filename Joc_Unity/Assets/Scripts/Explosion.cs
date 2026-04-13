@@ -5,6 +5,7 @@ public class Explosion : MonoBehaviour
     public AnimatedSpriteRenderer start;
     public AnimatedSpriteRenderer middle;
     public AnimatedSpriteRenderer end;
+    public GameObject owner;
 
     public void SetActiveRenderer(AnimatedSpriteRenderer renderer)
     {

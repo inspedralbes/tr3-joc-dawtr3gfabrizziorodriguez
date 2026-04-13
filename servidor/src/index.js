@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { WebSocketServer } = require('ws');
-const { connectDB } = require('./config/database');
+const { connectDB, getDB } = require('./config/database');
+const { ObjectId } = require('mongodb');
 const authRoutes = require('./routes/authRoutes');
 const gameRoutes = require('./routes/gameRoutes');
 
@@ -78,11 +79,31 @@ const startServer = async () => {
                     const maxPlayers = room.maxPlayers;
                     console.log(`🚀 Partida iniciada a la sala: ${lobbyId}`);
 
+                    const db = getDB();
+                    if (db && ObjectId.isValid(lobbyId)) {
+                        db.collection('partides').updateOne(
+                            { _id: new ObjectId(lobbyId) },
+                            { $set: { status: 'playing' } }
+                        ).catch(console.error);
+                    }
+
                     room.players.forEach(p => {
                         if (p.ws.readyState === 1) {
                             p.ws.send(JSON.stringify({ type: 'game_started', maxPlayers }));
                         }
                     });
+                }
+                
+                // ── END GAME ───────────────────────────────────────────
+                if (msg.type === 'end_game') {
+                    const { lobbyId } = msg;
+                    const db = getDB();
+                    if (db && ObjectId.isValid(lobbyId)) {
+                        db.collection('partides').updateOne(
+                            { _id: new ObjectId(lobbyId) },
+                            { $set: { status: 'finished' } }
+                        ).catch(console.error);
+                    }
                 }
 
                 // ── GAME JOIN (PARTIDA) ────────────────────────────────

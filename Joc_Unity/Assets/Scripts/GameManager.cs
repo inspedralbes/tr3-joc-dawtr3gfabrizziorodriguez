@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     private CancellationTokenSource _cts;
     private string _lobbyId;
     public string CurrentLobbyId => _lobbyId;
+
+    public static int[] playerLives = { 3, 3, 3, 3 };
+    public static int[] playerKills = { 0, 0, 0, 0 };
     
     // Hem d'encuar missatges del WS fora del main thread per no cridar l'API de Unity
     private Queue<string> _messageQueue = new Queue<string>();
@@ -250,6 +253,32 @@ public class GameManager : MonoBehaviour
     
     // ─── Win State i Rondes ───────────────────────────────────────────────────
 
+    public void OnPlayerDied(GameObject playerGO, GameObject killerGO)
+    {
+        for (int i = 0; i < _allPlayers.Length; i++)
+        {
+            if (_allPlayers[i] == playerGO)
+            {
+                playerLives[i]--;
+                break;
+            }
+        }
+
+        if (killerGO != null && killerGO != playerGO)
+        {
+            for (int i = 0; i < _allPlayers.Length; i++)
+            {
+                if (_allPlayers[i] == killerGO)
+                {
+                    playerKills[i]++;
+                    break;
+                }
+            }
+        }
+
+        CheckWinState();
+    }
+
     public void CheckWinState()
     {
         int aliveCount = 0;
@@ -258,12 +287,37 @@ public class GameManager : MonoBehaviour
             if (go != null && go.activeSelf) aliveCount++;
         }
 
-        if (aliveCount <= 1)
+        bool isGameOver = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (playerLives[i] <= 0)
+            {
+                isGameOver = true;
+                break;
+            }
+        }
+
+        if (isGameOver)
+        {
+            Invoke(nameof(GameOver), 3f);
+        }
+        else if (aliveCount <= 1)
+        {
             Invoke(nameof(NewRound), 3f);
+        }
     }
 
     private void NewRound()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void GameOver()
+    {
+        string endJson = $"{{\"type\":\"end_game\",\"lobbyId\":\"{_lobbyId}\"}}";
+        _ = SendMessageWS(endJson);
+
+        // Las vidas y muertes se resetearán en la pantalla de Scoreboard.
+        SceneManager.LoadScene("Scoreboard");
     }
 }
