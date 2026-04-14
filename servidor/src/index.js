@@ -121,8 +121,8 @@ const startServer = async () => {
                     }
                 }
 
-                // ── MOUSE/MOVE/BOMB (BROADCAST) ────────────────────────
-                if (msg.type === 'player_move' || msg.type === 'place_bomb') {
+                // ── MOUSE/MOVE/BOMB/DEATH (BROADCAST) ────────────────────────
+                if (msg.type === 'player_move' || msg.type === 'place_bomb' || msg.type === 'player_died') {
                     const room = rooms.get(currentLobby);
                     if (room) {
                         room.players.forEach(p => {

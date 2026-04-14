@@ -149,6 +149,25 @@ public class GameManager : MonoBehaviour
         _ = SendMessageWS(json);
     }
 
+    public void NotifyLocalPlayerDied(GameObject killerGO)
+    {
+        int killerIndex = -1;
+        if (killerGO != null) 
+        {
+            for (int i = 0; i < _allPlayers.Length; i++) 
+            {
+                if (_allPlayers[i] == killerGO) 
+                { 
+                    killerIndex = i + 1; 
+                    break; 
+                }
+            }
+        }
+
+        string json = $"{{\"type\":\"player_died\",\"victimIndex\":{_myIndex},\"killerIndex\":{killerIndex}}}";
+        _ = SendMessageWS(json);
+    }
+
     // ─── WebSocket ───────────────────────────────────────────────────────────
 
     private async Task ConnectToNetwork()
@@ -209,6 +228,27 @@ public class GameManager : MonoBehaviour
             {
                 BombController bc = _allPlayers[pIdx - 1].GetComponent<BombController>();
                 if (bc != null) bc.RemotePlaceBomb();
+            }
+        }
+        else if (raw.Contains("\"player_died\""))
+        {
+            int vIdx = ExtractInt(raw, "victimIndex");
+            int kIdx = ExtractInt(raw, "killerIndex");
+            
+            if (vIdx > 0 && vIdx <= _allPlayers.Length && vIdx != _myIndex)
+            {
+                GameObject victimObj = _allPlayers[vIdx - 1];
+                GameObject killerObj = (kIdx > 0 && kIdx <= _allPlayers.Length) ? _allPlayers[kIdx - 1] : null;
+
+                if (victimObj != null && victimObj.activeSelf)
+                {
+                    MovementController vMc = victimObj.GetComponent<MovementController>();
+                    if (vMc != null) 
+                    {
+                        vMc.lastKiller = killerObj;
+                        vMc.RemoteDeathSequence();
+                    }
+                }
             }
         }
     }
