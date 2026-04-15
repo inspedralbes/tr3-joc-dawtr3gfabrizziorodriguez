@@ -24,9 +24,18 @@ public class InGameUIManager : MonoBehaviour
         root.style.position = Position.Absolute;
 
         _maxPlayers = PlayerPrefs.GetInt("MaxPlayers", 4);
+        if (GameManager.Instance != null && GameManager.Instance.isOfflineMode)
+        {
+            _maxPlayers = 4;
+        }
 
         for (int i = 0; i < _maxPlayers; i++)
         {
+            if (GameManager.Instance != null && GameManager.Instance.isOfflineMode) 
+            {
+                // Dejamos que se creen las intefaces de los bots
+            }
+
             var container = new VisualElement();
             container.style.position = Position.Absolute;
             
@@ -72,7 +81,12 @@ public class InGameUIManager : MonoBehaviour
                 container.style.right = 20;
             }
 
-            string pName = PlayerPrefs.GetString("PlayerName_" + (i + 1), "Jugador " + (i + 1));
+            string pName;
+            if (GameManager.Instance != null && GameManager.Instance.isOfflineMode) {
+                pName = (i == 0) ? PlayerPrefs.GetString("Username", "Jugador") : "Bot_" + i;
+            } else {
+                pName = PlayerPrefs.GetString("PlayerName_" + (i + 1), "Jugador " + (i + 1));
+            }
             
             var nameLbl = new Label(pName);
             nameLbl.style.color = new StyleColor(new Color(1f, 0.85f, 0.2f)); // Nombre en dorado/amarillo suave

@@ -12,6 +12,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Mode Offline")]
+    public bool isOfflineMode = false;
+
+    [Header("Mode Entrenament ML-Agents")]
+    [Tooltip("S'activa automaticament si hi ha BotAgents a l'escena")]
+    public bool isTrainingMode = false;
+
     [Header("Jugadors (assignar des de l'Inspector)")]
     public GameObject player1GO;
     public GameObject player2GO;
@@ -47,6 +54,17 @@ public class GameManager : MonoBehaviour
             DestroyImmediate(gameObject);
         } else {
             Instance = this;
+            if (SceneManager.GetActiveScene().name.Contains("Sol")) {
+                isOfflineMode = true;
+            }
+            // Detectar si hi ha BotAgents (inclou inactius) → mode entrenament
+            if (FindObjectsOfType<BotAgent>(true).Length > 0)
+            {
+                isTrainingMode = true;
+                isOfflineMode = true;
+                Debug.Log("[GameManager] isTrainingMode = true (BotAgent detectat)");
+            }
+            PlayerPrefs.SetInt("LastMatchOffline", isOfflineMode ? 1 : 0);
         }
     }
 
@@ -69,6 +87,11 @@ public class GameManager : MonoBehaviour
         int maxP   = PlayerPrefs.GetInt("MaxPlayers", 4);
         _lobbyId   = PlayerPrefs.GetString("CurrentLobbyId", "");
 
+        if (isOfflineMode) {
+            maxP = 4; // Asegurarse de que aparezcan los 4 si estamos en Jugar Sol
+            _myIndex = 1; // El jugador principal siempre será el P1
+        }
+
         for (int i = 0; i < _allPlayers.Length; i++)
         {
             GameObject go = _allPlayers[i];
@@ -85,7 +108,7 @@ public class GameManager : MonoBehaviour
             MovementController mc = go.GetComponent<MovementController>();
             BombController bc = go.GetComponent<BombController>();
 
-            if (playerNumber == _myIndex)
+            if (playerNumber == _myIndex || isTrainingMode)
             {
                 _myPlayerGO = go;
                 _myMovement = mc;
@@ -100,7 +123,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!string.IsNullOrEmpty(_lobbyId))
+        if (!isOfflineMode && !string.IsNullOrEmpty(_lobbyId))
         {
             _cts = new CancellationTokenSource();
             _ = ConnectToNetwork();
@@ -109,6 +132,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (isOfflineMode) return;
+
         // 1. Enviar moviments locals a la xarxa
         if (_myPlayerGO != null && _myMovement != null && _myMovement.enabled)
         {
@@ -145,12 +170,14 @@ public class GameManager : MonoBehaviour
 
     public void NotifyBombPlaced()
     {
+        if (isOfflineMode) return;
         string json = $"{{\"type\":\"place_bomb\",\"playerIndex\":{_myIndex}}}";
         _ = SendMessageWS(json);
     }
 
     public void NotifyLocalPlayerDied(GameObject killerGO)
     {
+        if (isOfflineMode) return;
         int killerIndex = -1;
         if (killerGO != null) 
         {
@@ -295,6 +322,17 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDied(GameObject playerGO, GameObject killerGO)
     {
+        // En mode entrenament: notificar kills al BotAgent però ignorar vides/escena
+        if (isTrainingMode)
+        {
+            if (killerGO != null && killerGO != playerGO)
+            {
+                BotAgent killerBot = killerGO.GetComponent<BotAgent>();
+                if (killerBot != null) killerBot.OnBotKill();
+            }
+            return;
+        }
+
         for (int i = 0; i < _allPlayers.Length; i++)
         {
             if (_allPlayers[i] == playerGO)
@@ -311,6 +349,11 @@ public class GameManager : MonoBehaviour
                 if (_allPlayers[i] == killerGO)
                 {
                     playerKills[i]++;
+
+                    // Notificar al BotAgent del killer que ha fet un kill
+                    BotAgent killerBot = killerGO.GetComponent<BotAgent>();
+                    if (killerBot != null) killerBot.OnBotKill();
+
                     break;
                 }
             }
@@ -322,13 +365,19 @@ public class GameManager : MonoBehaviour
     public void CheckWinState()
     {
         int aliveCount = 0;
-        foreach (var go in _allPlayers)
+        bool isHumanDead = false;
+        for (int i = 0; i < _allPlayers.Length; i++)
         {
-            if (go != null && go.activeSelf) aliveCount++;
+            if (_allPlayers[i] != null && _allPlayers[i].activeSelf) 
+                aliveCount++;
+            
+            // Si soy yo y estoy inactivo, he muerto
+            if (i == (_myIndex - 1) && (_allPlayers[i] == null || !_allPlayers[i].activeSelf))
+                isHumanDead = true;
         }
 
         bool isGameOver = false;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < _allPlayers.Length; i++)
         {
             if (playerLives[i] <= 0)
             {
@@ -341,7 +390,7 @@ public class GameManager : MonoBehaviour
         {
             Invoke(nameof(GameOver), 3f);
         }
-        else if (aliveCount <= 1)
+        else if (aliveCount <= 1 || (isOfflineMode && isHumanDead))
         {
             Invoke(nameof(NewRound), 3f);
         }

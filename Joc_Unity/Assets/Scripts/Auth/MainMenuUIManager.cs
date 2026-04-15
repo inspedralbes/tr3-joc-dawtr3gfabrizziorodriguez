@@ -24,7 +24,7 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnPlaySoloClicked()
     {
         Debug.Log("🎮 Iniciant partida per a un sol jugador...");
-        // SceneManager.LoadScene("GameScene"); // Ho descomentarem quan tinguem l'escena
+        SceneManager.LoadScene("Partida_Sol");
     }
 
     private void OnMultiplayerClicked()

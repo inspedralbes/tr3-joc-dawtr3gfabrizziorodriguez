@@ -44,7 +44,14 @@ public class ScoreboardUIManager : MonoBehaviour
             }
         }
 
-        string winnerName = PlayerPrefs.GetString("PlayerName_" + (winnerIndex + 1), "Jugador " + (winnerIndex + 1));
+        bool wasOffline = PlayerPrefs.GetInt("LastMatchOffline", 0) == 1;
+
+        string winnerName;
+        if (wasOffline) {
+            winnerName = (winnerIndex == 0) ? PlayerPrefs.GetString("Username", "Jugador") : "Bot_" + winnerIndex;
+        } else {
+            winnerName = PlayerPrefs.GetString("PlayerName_" + (winnerIndex + 1), "Jugador " + (winnerIndex + 1));
+        }
 
         // Título "GANADOR"
         Label winnerLabel = new Label();
@@ -75,7 +82,12 @@ public class ScoreboardUIManager : MonoBehaviour
         for (int i = 0; i < maxPlayers; i++)
         {
             bool isWinner = (i == winnerIndex);
-            string pName = PlayerPrefs.GetString("PlayerName_" + (i + 1), "Jugador " + (i + 1));
+            string pName;
+            if (wasOffline) {
+                pName = (i == 0) ? PlayerPrefs.GetString("Username", "Jugador") : "Bot_" + i;
+            } else {
+                pName = PlayerPrefs.GetString("PlayerName_" + (i + 1), "Jugador " + (i + 1));
+            }
             
             tableContainer.Add(CreateRow(
                 pName, 

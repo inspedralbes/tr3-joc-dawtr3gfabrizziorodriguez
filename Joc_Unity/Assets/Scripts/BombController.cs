@@ -21,6 +21,8 @@ public class BombController : MonoBehaviour
     public Tilemap destructibleTiles;
     public Destructible destructiblePrefab;
 
+    private GameObject _currentBomb; // Referència a la bomba activa actual
+
     private void OnEnable()
     {
         bombsRemaining = bombAmount;
@@ -33,6 +35,20 @@ public class BombController : MonoBehaviour
         {
             StartCoroutine(PlaceBomb());
         }
+    }
+
+    /// <summary>
+    /// Cancel·la totes les bombes actives. Usat per BotAgent al inici de cada episodi.
+    /// </summary>
+    public void CancelBombs()
+    {
+        StopAllCoroutines();
+        if (_currentBomb != null)
+        {
+            Destroy(_currentBomb);
+            _currentBomb = null;
+        }
+        bombsRemaining = bombAmount;
     }
 
     private void Update()
@@ -55,12 +71,12 @@ public class BombController : MonoBehaviour
         position.x = Mathf.Round(position.x) + 0.5f;
         position.y = Mathf.Round(position.y) + 0.5f;
 
-        GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
+        _currentBomb = Instantiate(bombPrefab, position, Quaternion.identity);
         bombsRemaining--;
 
         yield return new WaitForSeconds(bombFuseTime);
 
-        position = bomb.transform.position;
+        position = _currentBomb != null ? _currentBomb.transform.position : (Vector2)transform.position;
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
         explosion.owner = gameObject;
@@ -72,7 +88,8 @@ public class BombController : MonoBehaviour
         Explode(position, Vector2.left, explosionRadius);
         Explode(position, Vector2.right, explosionRadius);
 
-        Destroy(bomb);
+        if (_currentBomb != null) Destroy(_currentBomb);
+        _currentBomb = null;
         bombsRemaining++;
     }
 

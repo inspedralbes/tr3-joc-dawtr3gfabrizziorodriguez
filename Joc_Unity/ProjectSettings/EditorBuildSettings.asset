@@ -21,7 +21,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Partida.unity
     guid: 8c1d6fedaf24414a59a6787eaca762b9
   - enabled: 1
+    path: Assets/Scenes/Partida_Sol.unity
+    guid: cb22675b09aad3566aac5a2fc5a5ad70
+  - enabled: 1
     path: Assets/Scenes/Scoreboard.unity
     guid: f65efddf13c14fb5aab353e5ff0d65c9
   m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
