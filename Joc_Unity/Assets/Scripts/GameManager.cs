@@ -108,18 +108,22 @@ public class GameManager : MonoBehaviour
             MovementController mc = go.GetComponent<MovementController>();
             BombController bc = go.GetComponent<BombController>();
 
-            if (playerNumber == _myIndex || isTrainingMode)
+            if (playerNumber == _myIndex)
             {
+                // Aquest és el jugador humà: activar control
                 _myPlayerGO = go;
                 _myMovement = mc;
-                if (mc != null) mc.enabled = true;
+                if (mc != null) { mc.enabled = true; mc.isBot = false; }
                 if (bc != null) bc.enabled = true;
                 _lastPos = go.transform.position;
             }
             else
             {
-                if (mc != null) mc.enabled = false;
-                if (bc != null) bc.enabled = false;
+                // Bot: mantenir mc i bc ACTIVATS perquè la física i els triggers funcionin.
+                // El flag isBot a MovementController i _isBot a BombController
+                // ja impedeixen que llegeixin el teclat.
+                if (mc != null) { mc.enabled = true; mc.isBot = true; }
+                if (bc != null) bc.enabled = true;
             }
         }
 

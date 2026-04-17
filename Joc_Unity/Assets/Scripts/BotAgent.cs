@@ -42,7 +42,12 @@ public class BotAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        // Reinici complet al principi de cada episodi (nova partida de 3 vides)
+        // En mode partida normal, no reiniciem manualment:
+        // el GameManager s'encarrega de recarregar l'escena quan toca.
+        if (GameManager.Instance != null && !GameManager.Instance.isTrainingMode)
+            return;
+
+        // Reinici complet al principi de cada episodi (mode entrenament)
         _lives = MaxLives;
         _bombCooldown = 0f;
 
@@ -126,7 +131,7 @@ public class BotAgent : Agent
     /// </summary>
     public void OnBotDeath()
     {
-        // MODO ENTRENAMIENTO: Respawn infinito sin límite de vidas, penalización completa.
+        // MODO ENTRENAMIENTO: Respawn infinit sense límit de vides
         if (GameManager.Instance != null && GameManager.Instance.isTrainingMode)
         {
             float deathReward = _diedByOwnBomb ? -1.5f : -1.0f;
@@ -136,23 +141,14 @@ public class BotAgent : Agent
             return;
         }
 
-        // MODO PARTIDA NORMAL: Límite de 3 vidas
-        _lives--;
-        Debug.Log("[BotAgent] Mort! Vides restants: " + _lives);
-
-        if (_lives <= 0)
-        {
-            float deathReward = _diedByOwnBomb ? -1.5f : -1.0f;
-            AddReward(deathReward);
-            Debug.Log("[BotAgent] Fi d'episodi. Reward: " + deathReward);
-            EndEpisode();
-        }
-        else
-        {
-            float deathReward = _diedByOwnBomb ? -0.5f : -0.3f;
-            AddReward(deathReward);
-            Respawn();
-        }
+        // MODO PARTIDA NORMAL: Mort permanent fins que es reinicia la ronda.
+        // El MovementController ja ha fet SetActive(false) al bot.
+        // El GameManager.CheckWinState() detectarà que queden menys jugadors
+        // i recarregarà l'escena (NewRound) quan sigui necessari.
+        float penalty = _diedByOwnBomb ? -1.5f : -1.0f;
+        AddReward(penalty);
+        Debug.Log("[BotAgent] Mort en partida normal. Bot eliminat fins a nova ronda.");
+        // NO fem Respawn ni EndEpisode: el bot queda inactiu fins que l'escena es recarregui.
     }
 
     /// <summary>

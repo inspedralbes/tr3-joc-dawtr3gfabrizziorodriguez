@@ -65,7 +65,7 @@ public class MovementController : MonoBehaviour
     private void Update()
     {
         if (!enabled) return;
-        if (isBot) return; // El bot es mou al FixedUpdate
+        if (isBot) return; // El bot es mou via SetRemoteState + FixedUpdate
 
         if (Input.GetKey(inputUp)) {
             SetDirection(Vector2.up, spriteRendererUp);
@@ -83,15 +83,18 @@ public class MovementController : MonoBehaviour
             SetDirection(Vector2.zero, activeSpriteRenderer);
             currentDirName = "idle";
         }
-
-        transform.Translate(direction * speed * Time.deltaTime);
+        // NO fem transform.Translate aqui: el moviment es fa al FixedUpdate via rigidbody
     }
 
     private void FixedUpdate()
     {
-        if (!enabled || !isBot) return;
-        Vector2 newPos = rigidbody.position + direction * speed * Time.fixedDeltaTime;
-        rigidbody.MovePosition(newPos);
+        if (!enabled) return;
+        // Tant el jugador humà com els bots mouen via rigidbody per respectar col·lisions
+        if (rigidbody != null)
+        {
+            Vector2 newPos = rigidbody.position + direction * speed * Time.fixedDeltaTime;
+            rigidbody.MovePosition(newPos);
+        }
     }
 
     private void SetDirection(Vector2 newDirection, AnimatedSpriteRenderer spriteRenderer)
@@ -155,17 +158,18 @@ public class MovementController : MonoBehaviour
         BombController bomb = GetComponent<BombController>();
         if (bomb != null) bomb.enabled = false;
 
-        // Si és un BotAgent, deixem que ML-Agents gestioni el reset.
-        // NO fem Invoke(OnDeathSequenceEnded) perquè no volem SetActive(false).
         BotAgent bot = GetComponent<BotAgent>();
         if (bot != null)
         {
-            // Detectar suïcidi: l'owner de l'explosió és el propi bot
             if (lastKiller == gameObject)
                 bot.MarkSelfKill();
 
             bot.OnBotDeath();
-            return; // ML-Agents s'encarrega de tot — Respawn() o EndEpisode()
+
+            // En mode ENTRENAMENT: BotAgent fa Respawn() immediatament → sortim
+            // En mode NORMAL: continuem amb la seqüència de mort visual
+            if (GameManager.Instance != null && GameManager.Instance.isTrainingMode)
+                return;
         }
 
         // Seqüència de mort estàndard per jugadors humans

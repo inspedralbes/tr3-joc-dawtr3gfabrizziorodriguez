@@ -1,0 +1,137 @@
+/* =============================================
+   BOMBERMAN ARCADE — MAIN MENU
+   ============================================= */
+
+/* ---------- FONS PRINCIPAL ---------- */
+.main-container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(10, 8, 20);
+}
+
+/* ---------- CARD CENTRAL ---------- */
+.card {
+    align-items: center;
+    justify-content: center;
+    width: 480px;
+    padding-top: 40px;
+    padding-bottom: 32px;
+    padding-left: 36px;
+    padding-right: 36px;
+    background-color: rgb(18, 14, 38);
+    border-width: 3px;
+    border-color: rgb(255, 140, 0);
+    border-radius: 6px;
+}
+
+/* ---------- TÍTOL BOMBERMAN ---------- */
+.title-label {
+    font-size: 52px;
+    -unity-font-style: bold;
+    color: rgb(255, 200, 0);
+    -unity-text-align: upper-center;
+    margin-bottom: 4px;
+}
+
+/* ---------- SUBTÍTOL ---------- */
+.subtitle-label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(255, 100, 30);
+    -unity-text-align: upper-center;
+    margin-bottom: 20px;
+}
+
+/* ---------- DIVIDER ---------- */
+.divider {
+    width: 380px;
+    height: 2px;
+    background-color: rgb(255, 140, 0);
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+
+/* ---------- TEXT MODE ---------- */
+.mode-label {
+    font-size: 16px;
+    color: rgb(200, 180, 255);
+    -unity-text-align: upper-center;
+    margin-bottom: 24px;
+    -unity-font-style: italic;
+}
+
+/* ---------- BOTONS DE MENÚ ---------- */
+.menu-button {
+    width: 380px;
+    height: 58px;
+    font-size: 20px;
+    -unity-font-style: bold;
+    border-radius: 4px;
+    border-width: 2px;
+    margin-bottom: 18px;
+    transition-duration: 0.15s;
+    /* Eliminar fons per defecte de Unity */
+    background-image: none;
+    -unity-background-image-tint-color: rgba(0,0,0,0);
+    cursor: link;
+}
+
+/* ---------- BOTÓ JUGAR SOL ---------- */
+.btn-solo {
+    background-color: rgb(30, 140, 60);
+    border-color: rgb(100, 255, 130);
+    color: rgb(220, 255, 220);
+}
+
+.btn-solo:hover {
+    background-color: rgb(50, 180, 80);
+    border-color: rgb(150, 255, 170);
+    scale: 1.04;
+}
+
+.btn-solo:active {
+    background-color: rgb(20, 100, 40);
+    scale: 0.97;
+}
+
+/* ---------- BOTÓ MULTIJUGADOR ---------- */
+.btn-multi {
+    background-color: rgb(20, 100, 200);
+    border-color: rgb(80, 200, 255);
+    color: rgb(200, 235, 255);
+}
+
+.btn-multi:hover {
+    background-color: rgb(40, 130, 230);
+    border-color: rgb(120, 220, 255);
+    scale: 1.04;
+}
+
+.btn-multi:active {
+    background-color: rgb(10, 70, 150);
+    scale: 0.97;
+}
+
+/* ---------- PEU DECORATIU ---------- */
+.footer-label {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgb(255, 180, 0);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    opacity: 0.7;
+}
+
+/* ---------- BOMBES CANTONADES ---------- */
+.corner-bomb {
+    position: absolute;
+    font-size: 32px;
+}
+
+.corner-tl { top: 16px; left: 16px; }
+.corner-tr { top: 16px; right: 16px; }
+.corner-bl { bottom: 16px; left: 16px; }
+.corner-br { bottom: 16px; right: 16px; }

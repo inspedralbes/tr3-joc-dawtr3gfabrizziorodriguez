@@ -1,11 +1,57 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Container" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgb(42, 42, 42);">
-        <ui:VisualElement name="MenuBox" style="width: 400px; padding: 30px; background-color: rgb(56, 56, 56); border-radius: 15px; align-items: center;">
-            <ui:Label text="JOC BOMBA" style="-unity-font-style: bold; font-size: 32px; color: rgb(255, 193, 7); margin-bottom: 30px;" />
-            <ui:Label text="Selecciona el mode de joc:" style="font-size: 16px; color: rgb(200, 200, 200); margin-bottom: 20px;" />
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+>
+    <ui:Style src="MainMenu.uss"/>
 
-            <ui:Button text="👤 JUGAR SOL" name="BtnSolo" style="width: 100%; height: 50px; font-size: 18px; background-color: rgb(76, 175, 80); color: white; margin-bottom: 15px; border-radius: 8px;" />
-            <ui:Button text="🌐 MULTIJUGADOR" name="BtnMulti" style="width: 100%; height: 50px; font-size: 18px; background-color: rgb(0, 150, 255); color: white; border-radius: 8px;" />
+    <!-- Forcem fons fosc amb inline style per sobreescriure Panel Settings -->
+    <ui:VisualElement name="main-container" class="main-container"
+        style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(10, 8, 20); align-items: center; justify-content: center;">
+
+        <!-- Bombes decoratives cantonades -->
+        <ui:Label text="💣" class="corner-bomb corner-tl" />
+        <ui:Label text="💣" class="corner-bomb corner-tr" />
+        <ui:Label text="💣" class="corner-bomb corner-bl" />
+        <ui:Label text="💣" class="corner-bomb corner-br" />
+
+        <!-- Card central -->
+        <ui:VisualElement name="card" class="card"
+            style="background-color: rgb(18, 14, 38); border-width: 3px; border-color: rgb(255, 140, 0); border-radius: 6px; align-items: center; width: 480px; padding: 40px 36px 32px 36px;">
+
+            <!-- Títol -->
+            <ui:Label text="BOMBERMAN" class="title-label"
+                style="font-size: 52px; -unity-font-style: bold; color: rgb(255, 200, 0); -unity-text-align: upper-center; margin-bottom: 4px;" />
+            <ui:Label text="💥  SELECT MODE  💥" class="subtitle-label"
+                style="font-size: 14px; -unity-font-style: bold; color: rgb(255, 100, 30); -unity-text-align: upper-center; margin-bottom: 20px;" />
+
+            <!-- Divider -->
+            <ui:VisualElement class="divider"
+                style="width: 380px; height: 2px; background-color: rgb(255, 140, 0); margin-bottom: 24px;" />
+
+            <!-- Subtítol mode -->
+            <ui:Label text="Selecciona el mode de joc:" class="mode-label"
+                style="font-size: 16px; color: rgb(200, 180, 255); -unity-text-align: upper-center; margin-bottom: 24px; -unity-font-style: italic;" />
+
+            <!-- Botó Jugar Sol -->
+            <ui:Button name="BtnSolo" text="👤  JUGAR SOL" class="menu-button btn-solo"
+                style="width: 380px; height: 58px; font-size: 20px; -unity-font-style: bold; background-color: rgb(30, 140, 60); border-color: rgb(100, 255, 130); border-width: 2px; border-radius: 4px; color: rgb(220, 255, 220); margin-bottom: 18px;" />
+
+            <!-- Botó Multijugador -->
+            <ui:Button name="BtnMulti" text="🌐  MULTIJUGADOR" class="menu-button btn-multi"
+                style="width: 380px; height: 58px; font-size: 20px; -unity-font-style: bold; background-color: rgb(20, 100, 200); border-color: rgb(80, 200, 255); border-width: 2px; border-radius: 4px; color: rgb(200, 235, 255); margin-bottom: 18px;" />
+
+            <!-- Divider baix -->
+            <ui:VisualElement class="divider"
+                style="width: 380px; height: 2px; background-color: rgb(255, 140, 0); margin-bottom: 8px;" />
+
+            <!-- Peu decoratiu -->
+            <ui:Label text="INSERT COIN TO CONTINUE" class="footer-label"
+                style="font-size: 12px; color: rgb(255, 180, 0); -unity-font-style: bold; -unity-text-align: upper-center; opacity: 0.7;" />
+
         </ui:VisualElement>
+
     </ui:VisualElement>
 </ui:UXML>
