@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  servidor:
+    build: .
+    container_name: servidor_bomberman
+    ports:
+      - "3000:3000"
+    restart: always
+    env_file:
+      - .env
