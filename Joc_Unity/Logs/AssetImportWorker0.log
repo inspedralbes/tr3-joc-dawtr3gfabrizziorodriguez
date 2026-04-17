@@ -27285,3 +27285,11 @@ Received Import Request.
 Start importing Assets/Scenes/Login.unity using Guid(8c9cfa26abfee488c85f1582747f6a02) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '3ef79763d79cb0b7927dbcfef855f0b3') in 0.3499393 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f2f8065e025a4d115316dcc7c41f624f DependenciesID=30f11276e14bf56c859fd706263b2d74 StaticDependenciesID=32290ad30bb1b1e1b777d5684d1bdc9d 
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
+========================================================================
+Received Import Request.
+  Time since last request: 2291.594372 seconds.
+  path: Assets/Scenes/Login.unity
+  importAddress: Guid(8c9cfa26abfee488c85f1582747f6a02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Login.unity using Guid(8c9cfa26abfee488c85f1582747f6a02) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: 'cdb4c252f9842beb521f14bcfbd16938') in 0.153363 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f2f8065e025a4d115316dcc7c41f624f DependenciesID=627de2f54b0431f9b10a1d0272493182 StaticDependenciesID=d2be2ec77cf7afee4c8fd30358ccff27 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+

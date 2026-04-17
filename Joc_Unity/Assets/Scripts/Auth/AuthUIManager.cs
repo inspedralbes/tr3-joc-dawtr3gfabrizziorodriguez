@@ -115,6 +115,7 @@ namespace Auth
                 webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
                 webRequest.downloadHandler = new DownloadHandlerBuffer();
                 webRequest.SetRequestHeader("Content-Type", "application/json");
+                webRequest.timeout = 10; // Timeout de 10 segons
 
                 // Enviar la petició i esperar
                 yield return webRequest.SendWebRequest();
