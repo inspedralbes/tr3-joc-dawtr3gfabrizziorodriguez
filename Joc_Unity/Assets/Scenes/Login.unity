@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baf193885fc6e86d85dfd482d96b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Auth.AuthUIManager
-  backendUrl: http://localhost:3000/api/auth
+  backendUrl: http://204.168.212.178:3000/api/auth
   uiDocument: {fileID: 0}
 --- !u!114 &1425952547
 MonoBehaviour:
