@@ -27277,3 +27277,11 @@ Memory consumption went from 207.0 MB to 171.1 MB.
 Total: 66.659900 ms (FindLiveObjects: 2.695700 ms CreateObjectMapping: 2.587600 ms MarkObjects: 16.509000 ms  DeleteObjects: 44.624800 ms)
 
 Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 1564.656610 seconds.
+  path: Assets/Scenes/Login.unity
+  importAddress: Guid(8c9cfa26abfee488c85f1582747f6a02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Login.unity using Guid(8c9cfa26abfee488c85f1582747f6a02) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '3ef79763d79cb0b7927dbcfef855f0b3') in 0.3499393 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f2f8065e025a4d115316dcc7c41f624f DependenciesID=30f11276e14bf56c859fd706263b2d74 StaticDependenciesID=32290ad30bb1b1e1b777d5684d1bdc9d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
