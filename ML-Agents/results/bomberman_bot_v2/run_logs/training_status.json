@@ -1,0 +1,39 @@
+{
+    "BombermanBot": {
+        "checkpoints": [
+            {
+                "steps": 499956,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-499956.onnx",
+                "reward": 0.4210526472643802,
+                "creation_time": 1776387825.666451,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-499956.pt"
+                ]
+            },
+            {
+                "steps": 787312,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.onnx",
+                "reward": null,
+                "creation_time": 1776392965.6372213,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.pt"
+                ]
+            }
+        ],
+        "elo": 1200.0,
+        "final_checkpoint": {
+            "steps": 787312,
+            "file_path": "results/bomberman_bot_v2/BombermanBot.onnx",
+            "reward": null,
+            "creation_time": 1776392965.6372213,
+            "auxillary_file_paths": [
+                "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

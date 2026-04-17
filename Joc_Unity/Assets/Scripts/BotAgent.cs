@@ -80,30 +80,14 @@ public class BotAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Posició pròpia (2)
-        sensor.AddObservation(transform.localPosition.x);
-        sensor.AddObservation(transform.localPosition.y);
-
-        // Posició relativa enemic més proper (2)
-        GameObject nearest = GetNearestEnemy();
-        if (nearest != null)
-        {
-            Vector3 relative = nearest.transform.localPosition - transform.localPosition;
-            sensor.AddObservation(relative.x);
-            sensor.AddObservation(relative.y);
-        }
-        else
-        {
-            sensor.AddObservation(0f);
-            sensor.AddObservation(0f);
-        }
-
-        // Bomba disponible (1)
+        // El sensor visual principal ahora será el RayPerceptionSensor2D que añadiremos en Unity.
+        // Aquí solo pasaremos 1 observación interna: ¿Tengo bomba disponible y sin cooldown?
         bool hasBomb = bombController != null && bombController.enabled
                        && bombController.bombAmount > 0 && _bombCooldown <= 0f;
         sensor.AddObservation(hasBomb ? 1f : 0f);
 
-        // Total: 5 observacions
+        // Nota visual: En el componente "Behavior Parameters" del Bot en Unity,
+        // asegúrate de que el 'Space Size' dentro de Vector Observation sea de valor 1.
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -142,12 +126,22 @@ public class BotAgent : Agent
     /// </summary>
     public void OnBotDeath()
     {
+        // MODO ENTRENAMIENTO: Respawn infinito sin límite de vidas, penalización completa.
+        if (GameManager.Instance != null && GameManager.Instance.isTrainingMode)
+        {
+            float deathReward = _diedByOwnBomb ? -1.5f : -1.0f;
+            AddReward(deathReward);
+            Debug.Log("[BotAgent] Mort en entrenament. Reward: " + deathReward);
+            Respawn();
+            return;
+        }
+
+        // MODO PARTIDA NORMAL: Límite de 3 vidas
         _lives--;
         Debug.Log("[BotAgent] Mort! Vides restants: " + _lives);
 
         if (_lives <= 0)
         {
-            // Ha perdut totes les vides → fi de l'episodi
             float deathReward = _diedByOwnBomb ? -1.5f : -1.0f;
             AddReward(deathReward);
             Debug.Log("[BotAgent] Fi d'episodi. Reward: " + deathReward);
@@ -155,7 +149,6 @@ public class BotAgent : Agent
         }
         else
         {
-            // Té vides restants → penalització + respawn (NO acaba l'episodi)
             float deathReward = _diedByOwnBomb ? -0.5f : -0.3f;
             AddReward(deathReward);
             Respawn();
