@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 # DeepWiki Q&A with Code Context for Repository: inspedralbes/tr3-joc-dawtr3gfabrizziorodriguez
 ## Q1
 Quiero el Readme con las tecnologias y todo lo importante para que se vea en mi readme y tambien estos diagramas: casos d’ús entitat-relació microserveis, Nom dels integrants (Fabrizzio Rodriguez Gonzales) Nom del projecte Petita descripció Adreça del gestor de tasques (jir) URL de producció (quan la tingueu) Estat: (explicació d'en quin punt està) dame un diseño bonito porfavor
 ### Answer
+=======
+>>>>>>> 040661e8b3b467ae97ca9eef37debe0f85ac2ffd
 # 🎮 Bomberman Joc - README
 
 ## 📋 Información del Proyecto
@@ -322,4 +325,8 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
  * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
  * URL de producció (quan la tingueu)
  * Estat: (explicació d'en quin punt està)
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 040661e8b3b467ae97ca9eef37debe0f85ac2ffd
