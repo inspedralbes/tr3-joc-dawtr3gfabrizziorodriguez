@@ -27,7 +27,7 @@ namespace Auth
     public class AuthUIManager : MonoBehaviour
     {
         [Header("Configuració Xarxa")]
-        [SerializeField] private string backendUrl = "http://localhost:3000/api/auth";
+        [SerializeField] private string backendUrl = "http://204.168.212.178:3000/api/auth";
 
         [Header("Configuració UI")]
         [SerializeField] private UIDocument uiDocument;

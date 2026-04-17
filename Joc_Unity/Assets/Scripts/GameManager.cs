@@ -57,12 +57,12 @@ public class GameManager : MonoBehaviour
             if (SceneManager.GetActiveScene().name.Contains("Sol")) {
                 isOfflineMode = true;
             }
-            // Detectar si hi ha BotAgents (inclou inactius) → mode entrenament
-            if (FindObjectsOfType<BotAgent>(true).Length > 0)
+            // isTrainingMode es controla des de l'Inspector de Unity.
+            // Si està activat manualment, també és offline.
+            if (isTrainingMode)
             {
-                isTrainingMode = true;
                 isOfflineMode = true;
-                Debug.Log("[GameManager] isTrainingMode = true (BotAgent detectat)");
+                Debug.Log("[GameManager] isTrainingMode = true (activat manualment des de l'Inspector)");
             }
             PlayerPrefs.SetInt("LastMatchOffline", isOfflineMode ? 1 : 0);
         }
@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour
         _ws = new ClientWebSocket();
         try
         {
-            await _ws.ConnectAsync(new Uri("ws://localhost:3000"), _cts.Token);
+            await _ws.ConnectAsync(new Uri("ws://204.168.212.178:3000"), _cts.Token);
             string joinJson = $"{{\"type\":\"game_join\",\"lobbyId\":\"{_lobbyId}\",\"playerIndex\":{_myIndex}}}";
             await SendMessageWS(joinJson);
 

@@ -1,33 +1,42 @@
 {
     "BombermanBot": {
+        "elo": 1200.0,
         "checkpoints": [
             {
-                "steps": 499956,
-                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-499956.onnx",
-                "reward": 0.4210526472643802,
-                "creation_time": 1776387825.666451,
+                "steps": 37763,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-37763.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776424637.482645,
                 "auxillary_file_paths": [
-                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-499956.pt"
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-37763.pt"
                 ]
             },
             {
-                "steps": 787312,
-                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.onnx",
-                "reward": null,
-                "creation_time": 1776392965.6372213,
+                "steps": 499983,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-499983.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776430697.5177844,
                 "auxillary_file_paths": [
-                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.pt"
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-499983.pt"
+                ]
+            },
+            {
+                "steps": 798311,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776434204.7704883,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.pt"
                 ]
             }
         ],
-        "elo": 1200.0,
         "final_checkpoint": {
-            "steps": 787312,
+            "steps": 798311,
             "file_path": "results/bomberman_bot_v2/BombermanBot.onnx",
-            "reward": null,
-            "creation_time": 1776392965.6372213,
+            "reward": 0.5000000149011612,
+            "creation_time": 1776434204.7704883,
             "auxillary_file_paths": [
-                "results/bomberman_bot_v2/BombermanBot/BombermanBot-787312.pt"
+                "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.pt"
             ]
         }
     },

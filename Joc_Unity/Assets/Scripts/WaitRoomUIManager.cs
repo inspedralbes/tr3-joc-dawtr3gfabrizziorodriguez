@@ -106,7 +106,7 @@ namespace GameUI
             _ws = new ClientWebSocket();
             try
             {
-                await _ws.ConnectAsync(new Uri("ws://localhost:3000"), _cts.Token);
+                await _ws.ConnectAsync(new Uri("ws://204.168.212.178:3000"), _cts.Token);
 
                 _statusToSet       = "🟢 Connectat i escoltant jugadors...";
                 _needsStatusUpdate = true;

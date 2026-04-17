@@ -27,9 +27,9 @@ namespace GameUI
         private TextField _inputLobbyName, _inputMaxPlayers;
         private Button _btnCancelCreate, _btnConfirmCreate;
 
-        private string _apiUrlList = "http://localhost:3000/api/games/list";
-        private string _apiUrlCreate = "http://localhost:3000/api/games/create";
-        private string _apiUrlJoin = "http://localhost:3000/api/games/join"; 
+        private string _apiUrlList = "http://204.168.212.178:3000/api/games/list";
+        private string _apiUrlCreate = "http://204.168.212.178:3000/api/games/create";
+        private string _apiUrlJoin = "http://204.168.212.178:3000/api/games/join"; 
 
         private void OnEnable()
         {

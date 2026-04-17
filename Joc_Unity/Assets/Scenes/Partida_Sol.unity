@@ -965,7 +965,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 491070eb45c3a08958cd1dfa67db9f3c, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: BombermanBot
   TeamId: 0
   m_UseChildSensors: 1
@@ -1551,7 +1551,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 491070eb45c3a08958cd1dfa67db9f3c, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: BombermanBot
   TeamId: 0
   m_UseChildSensors: 1
@@ -5431,7 +5431,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 491070eb45c3a08958cd1dfa67db9f3c, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: BombermanBot
   TeamId: 0
   m_UseChildSensors: 1
