@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-# DeepWiki Q&A with Code Context for Repository: inspedralbes/tr3-joc-dawtr3gfabrizziorodriguez
-## Q1
-Quiero el Readme con las tecnologias y todo lo importante para que se vea en mi readme y tambien estos diagramas: casos d’ús entitat-relació microserveis, Nom dels integrants (Fabrizzio Rodriguez Gonzales) Nom del projecte Petita descripció Adreça del gestor de tasques (jir) URL de producció (quan la tingueu) Estat: (explicació d'en quin punt està) dame un diseño bonito porfavor
-### Answer
-=======
->>>>>>> 040661e8b3b467ae97ca9eef37debe0f85ac2ffd
-# 🎮 Bomberman Joc - README
-
-## 📋 Información del Proyecto
-
-**Nombre del Proyecto:** Bomberman Joc  
-**Integrante:** Fabrizzio Rodriguez Gonzales  
-**Descripción:** Recreación moderna del clásico Bomberman con multijugador online en tiempo real y modo individual con IA entrenada mediante reinforcement learning  
-**Gestor de Tareas:** [Jira](https://jira.example.com)  
-**URL de Producción:** *Pendiente de despliegue*  
-**Estado Actual:** 🟡 En desarrollo - Funcionalidad multijugador completa, modo individual con bot en implementación
-
----
 
 ## 🛠️ Stack Tecnológico
 
