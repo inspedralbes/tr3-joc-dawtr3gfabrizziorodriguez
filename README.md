@@ -1,4 +1,3 @@
-
 ## 🛠️ Stack Tecnológico
 
 | Componente | Tecnología | Versión |
@@ -167,8 +166,6 @@ stateDiagram-v2
     SoloMode --> Game : Iniciar Bot
 ```
 
----
-
 ## 🐛 Issues Conocidos
 
 - Los bots en modo individual necesitan optimización de pathfinding
@@ -191,12 +188,6 @@ stateDiagram-v2
 - **Desarrollador:** Fabrizzio Rodriguez Gonzales
 - **Proyecto:** TR3 - DAW
 - **Repositorio:** [GitHub](https://github.com/inspedralbes/tr3-joc-dawtr3gfabrizziorodriguez)
-
----
-
-## 📄 Licencia
-
-MIT License - Ver archivo [LICENSE](LICENSE) para más detalles tr3-joc-dawtr3gfabrizziorodriguez:1-1 
 
 ---
 
@@ -287,27 +278,3 @@ app.use('/api/games', gameRoutes);
         private string _apiUrlList = "http://localhost:3000/api/games/list";
         private string _apiUrlCreate = "http://localhost:3000/api/games/create";
         private string _apiUrlJoin = "http://localhost:3000/api/games/join"; 
-```
-**File:** README.md (L1-16)
-```markdown
-# Bomberman Joc
-Esquema mínim de carpetes pels projectes transversals
-
-És obligatori seguir aquesta estructura tot i que la podeu ampliar.
-
-## Atenció
-Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
-
-# Aquest fitxer ha de contenir com a mínim:
- * Nom dels integrants
- * Nom del projecte
- * Petita descripció
- * Adreça del gestor de tasques (taiga, jira, trello...)
- * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
- * URL de producció (quan la tingueu)
- * Estat: (explicació d'en quin punt està)
-<<<<<<< HEAD
-```
-=======
-```
->>>>>>> 040661e8b3b467ae97ca9eef37debe0f85ac2ffd
