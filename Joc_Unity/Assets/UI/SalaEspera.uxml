@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:ue="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+>
+    <!-- CONTENIDOR PRINCIPAL -->
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(10, 8, 20); align-items: center; justify-content: center; width: 100%; height: 100%;">
+
+        <!-- Bombes cantonades -->
+        <ui:Label text="💣" style="position: absolute; top: 16px; left: 16px; font-size: 32px;" />
+        <ui:Label text="💣" style="position: absolute; top: 16px; right: 16px; font-size: 32px;" />
+        <ui:Label text="💣" style="position: absolute; bottom: 16px; left: 16px; font-size: 32px;" />
+        <ui:Label text="💣" style="position: absolute; bottom: 16px; right: 16px; font-size: 32px;" />
+
+        <!-- CARD CENTRAL -->
+        <ui:VisualElement style="background-color: rgb(18, 14, 38); border-width: 3px; border-color: rgb(255, 140, 0); border-radius: 6px; align-items: center; width: 580px; padding: 36px 40px 32px 40px;">
+
+            <!-- Títol BOMBERMAN -->
+            <ui:Label text="BOMBERMAN"
+                style="font-size: 48px; -unity-font-style: bold; color: rgb(255, 200, 0); -unity-text-align: upper-center; margin-bottom: 2px; letter-spacing: 4px;" />
+            <ui:Label text="💥  SALA D'ESPERA  💥"
+                style="font-size: 14px; -unity-font-style: bold; color: rgb(255, 100, 30); -unity-text-align: upper-center; margin-bottom: 20px; letter-spacing: 2px;" />
+
+            <!-- Divider -->
+            <ui:VisualElement style="width: 480px; height: 2px; background-color: rgb(255, 140, 0); margin-bottom: 20px; opacity: 0.6;" />
+
+            <!-- Codi de la Sala -->
+            <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: center; margin-bottom: 20px; background-color: rgb(30, 24, 55); padding: 10px 24px; border-radius: 4px; border-width: 2px; border-color: rgba(255,140,0,0.5); height: 56px;">
+                <ui:Label text="CODI DE LA SALA:"
+                    style="font-size: 18px; color: rgb(200, 180, 255); margin-right: 14px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+                <ui:Label name="LblLobbyCode" text="CARREGANT..."
+                    style="font-size: 22px; -unity-font-style: bold; color: rgb(255, 215, 0); -unity-text-align: middle-center; letter-spacing: 3px;" />
+            </ui:VisualElement>
+
+            <!-- Llista de jugadors -->
+            <ui:VisualElement style="width: 480px; background-color: rgb(12, 10, 28); border-radius: 4px; border-width: 2px; border-color: rgba(255,140,0,0.3); padding: 20px; align-items: center; margin-bottom: 20px;">
+
+                <ui:Label text="👥  JUGADORS CONNECTATS"
+                    style="font-size: 18px; -unity-font-style: bold; color: rgb(255, 200, 0); margin-bottom: 10px; -unity-text-align: upper-center; letter-spacing: 1px;" />
+
+                <ui:Label name="StatusText" text="Connectant al servidor..."
+                    style="color: rgb(180, 160, 255); font-size: 15px; margin-bottom: 12px; -unity-font-style: italic;" />
+
+                <ui:ScrollView name="PlayersList"
+                    style="width: 100%; height: 200px; background-color: rgb(10, 8, 20); padding: 12px; border-radius: 4px; border-width: 1px; border-color: rgba(255,140,0,0.2);">
+                    <!-- Els noms es crearan des del C# -->
+                </ui:ScrollView>
+
+            </ui:VisualElement>
+
+            <!-- Divider -->
+            <ui:VisualElement style="width: 480px; height: 2px; background-color: rgb(255, 140, 0); margin-bottom: 20px; opacity: 0.6;" />
+
+            <!-- Botons SORTIR / COMENÇAR -->
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between; width: 480px;">
+                <ui:Button name="BtnLeave" text="✖  SORTIR"
+                    style="width: 224px; height: 54px; font-size: 18px; -unity-font-style: bold; background-color: rgb(160, 20, 60); border-color: rgb(255, 80, 120); border-width: 2px; border-radius: 4px; color: rgb(255, 220, 230);" />
+                <ui:Button name="BtnStartGame" text="▶  COMENÇAR"
+                    style="width: 224px; height: 54px; font-size: 18px; -unity-font-style: bold; background-color: rgb(30, 140, 60); border-color: rgb(100, 255, 130); border-width: 2px; border-radius: 4px; color: rgb(220, 255, 220);" />
+            </ui:VisualElement>
+
+            <!-- Peu -->
+            <ui:Label text="INSERT COIN TO CONTINUE"
+                style="margin-top: 20px; font-size: 11px; color: rgb(255, 180, 0); -unity-font-style: bold; -unity-text-align: upper-center; letter-spacing: 3px; opacity: 0.6;" />
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

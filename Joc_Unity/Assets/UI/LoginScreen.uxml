@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+>
+    <ui:Style src="LoginScreen.uss"/>
+
+    <!-- Fons amb quadriculat arcade -->
+    <ui:VisualElement name="main-container" class="main-container">
+
+        <!-- Decoració: bombes a les cantonades -->
+        <ui:Label text="💣" class="corner-bomb corner-tl" />
+        <ui:Label text="💣" class="corner-bomb corner-tr" />
+        <ui:Label text="💣" class="corner-bomb corner-bl" />
+        <ui:Label text="💣" class="corner-bomb corner-br" />
+
+        <!-- Panel central -->
+        <ui:VisualElement name="card" class="card">
+
+            <!-- Títol BOMBERMAN -->
+            <ui:Label text="BOMBERMAN" class="title-label" />
+            <ui:Label text="💥 PLAYER LOGIN 💥" class="subtitle-label" />
+
+            <!-- Divider decoratiu -->
+            <ui:VisualElement class="divider" />
+
+            <!-- Inputs -->
+            <ui:VisualElement class="input-row">
+                <ui:Label text="👤" class="input-icon" />
+                <ui:TextField name="username-input" label="" class="input-field" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="input-row">
+                <ui:Label text="🔒" class="input-icon" />
+                <ui:TextField name="password-input" label="" password="true" class="input-field" />
+            </ui:VisualElement>
+
+            <!-- Placeholder labels visuals -->
+            <ui:Label text="Usuari" class="placeholder-hint hint-user" />
+            <ui:Label text="Contrasenya" class="placeholder-hint hint-pass" />
+
+            <!-- Divider decoratiu -->
+            <ui:VisualElement class="divider" />
+
+            <!-- Botons -->
+            <ui:VisualElement name="buttons-container" class="buttons-container">
+                <ui:Button name="login-button" text="▶  LOGIN" class="action-button btn-login" />
+                <ui:Button name="register-button" text="★  REGISTRAR" class="action-button btn-register" />
+            </ui:VisualElement>
+
+            <!-- Status -->
+            <ui:Label name="status-label" text="" class="status-label" />
+
+            <!-- Peu decoratiu -->
+            <ui:Label text="INSERT COIN TO CONTINUE" class="footer-label" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

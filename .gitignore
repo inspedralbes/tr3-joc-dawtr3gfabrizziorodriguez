@@ -1,0 +1,55 @@
+# ==========================================
+# Unity - Ignorar TODO lo generado automáticamente
+# ==========================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uilds/
+/[Bb]uild/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Regla universal para subcarpetas (Como tu carpeta Joc_Unity)
+**/[Ll]ibrary/
+**/[Tt]emp/
+**/[Oo]bj/
+**/[Bb]uild/
+**/[Uu]ser[Ss]ettings/
+
+# Archivos de configuración y esquemas (Los .xsd y .slnx de tu captura)
+*.xsd
+*.sln
+*.slnx
+*.csproj
+*.unityproj
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Carpetas de IDEs
+.vs/
+.idea/
+.vscode/
+.gradle/
+
+# ==========================================
+# Backend / Node.js
+# ==========================================
+**/node_modules/
+npm-debug.log*
+yarn-error.log*
+.env
+.env.*
+
+# ==========================================
+# OS específicos
+# ==========================================
+.DS_Store
+Thumbs.db

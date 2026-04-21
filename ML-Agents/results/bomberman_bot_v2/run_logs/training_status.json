@@ -1,0 +1,48 @@
+{
+    "BombermanBot": {
+        "elo": 1200.0,
+        "checkpoints": [
+            {
+                "steps": 37763,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-37763.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776424637.482645,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-37763.pt"
+                ]
+            },
+            {
+                "steps": 499983,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-499983.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776430697.5177844,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-499983.pt"
+                ]
+            },
+            {
+                "steps": 798311,
+                "file_path": "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.onnx",
+                "reward": 0.5000000149011612,
+                "creation_time": 1776434204.7704883,
+                "auxillary_file_paths": [
+                    "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 798311,
+            "file_path": "results/bomberman_bot_v2/BombermanBot.onnx",
+            "reward": 0.5000000149011612,
+            "creation_time": 1776434204.7704883,
+            "auxillary_file_paths": [
+                "results/bomberman_bot_v2/BombermanBot/BombermanBot-798311.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

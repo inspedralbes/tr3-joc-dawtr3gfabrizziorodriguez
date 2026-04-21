@@ -1,0 +1,7 @@
+para seguir entrenando el bot
+
+docker-compose run --service-ports trainer mlagents-learn bomberman.yaml --run-id=bomberman_bot_v2 --resume
+
+comando para mover el archivo y probarlo en unity
+
+Copy-Item "C:\Users\fabri\Documents\tr3-joc-dawtr3gfabrizziorodriguez\ML-Agents\results\bomberman_bot_v2\BombermanBot.onnx" -Destination "C:\Users\fabri\Documents\tr3-joc-dawtr3gfabrizziorodriguez\Joc_Unity\Assets\ML-Agents\" -Force

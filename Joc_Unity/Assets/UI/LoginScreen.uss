@@ -1,0 +1,230 @@
+/* =============================================
+   BOMBERMAN ARCADE LOGIN SCREEN
+   Estil: Arcade / Pixel Art / Neon
+   ============================================= */
+
+/* ---------- FONS PRINCIPAL ---------- */
+.main-container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(10, 8, 20);
+}
+
+/* ---------- CARD CENTRAL ---------- */
+.card {
+    align-items: center;
+    justify-content: center;
+    width: 480px;
+    padding: 40px 36px 32px 36px;
+    background-color: rgba(18, 14, 38, 0.97);
+    border-width: 3px;
+    border-color: rgb(255, 140, 0);
+    border-radius: 6px;
+}
+
+/* ---------- TÍTOL BOMBERMAN ---------- */
+.title-label {
+    font-size: 52px;
+    -unity-font-style: bold;
+    color: rgb(255, 200, 0);
+    -unity-text-align: upper-center;
+    margin-bottom: 4px;
+    letter-spacing: 4px;
+}
+
+/* ---------- SUBTÍTOL ---------- */
+.subtitle-label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(255, 100, 30);
+    -unity-text-align: upper-center;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* ---------- DIVIDER ---------- */
+.divider {
+    width: 380px;
+    height: 2px;
+    background-color: rgb(255, 140, 0);
+    margin-top: 4px;
+    margin-bottom: 24px;
+    opacity: 0.6;
+}
+
+/* ---------- FILA D'INPUT ---------- */
+.input-row {
+    flex-direction: row;
+    align-items: center;
+    width: 380px;
+    margin-bottom: 18px;
+    background-color: rgba(40, 30, 60, 0.8);
+    border-width: 2px;
+    border-color: rgba(255, 140, 0, 0.4);
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: rgb(255, 240, 200);
+}
+
+.input-row:hover {
+    border-color: rgb(255, 140, 0);
+}
+
+/* ---------- ICONA INPUT ---------- */
+.input-icon {
+    font-size: 22px;
+    width: 36px;
+    color: rgb(255, 180, 50);
+    -unity-text-align: middle-center;
+    margin-right: 6px;
+}
+
+/* ---------- CAMP DE TEXT ---------- */
+.input-field {
+    flex-grow: 1;
+    font-size: 18px;
+    color: rgb(255, 240, 200);
+    background-color: rgba(0,0,0,0);
+    border-width: 0;
+}
+
+.input-field > .unity-label {
+    display: none;
+}
+
+.input-field > .unity-base-text-field__input {
+    background-color: rgba(0,0,0,0);
+    border-width: 0;
+    color: rgb(255, 240, 200);
+    font-size: 18px;
+    padding: 6px 4px;
+}
+
+/* Text que l'usuari escriu — forçar color visible */
+.input-field > .unity-base-text-field__input > .unity-text-element {
+    color: rgb(255, 240, 200);
+    font-size: 18px;
+}
+
+/* Cursor i selecció */
+.input-field #unity-text-input {
+    color: rgb(255, 240, 200);
+    -unity-font-style: normal;
+    font-size: 18px;
+    background-color: rgba(0,0,0,0);
+    border-width: 0;
+}
+
+/* ---------- PLACEHOLDER HINTS (visuals) ---------- */
+.placeholder-hint {
+    display: none;
+}
+
+/* ---------- CONTENIDOR BOTONS ---------- */
+.buttons-container {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 380px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+/* ---------- BOTÓ BASE ---------- */
+.action-button {
+    width: 178px;
+    height: 50px;
+    font-size: 16px;
+    -unity-font-style: bold;
+    border-radius: 4px;
+    border-width: 2px;
+    letter-spacing: 1px;
+    transition-duration: 0.15s;
+}
+
+/* ---------- BOTÓ LOGIN (taronja/groc) ---------- */
+.btn-login {
+    background-color: rgb(220, 100, 0);
+    border-color: rgb(255, 180, 0);
+    color: rgb(255, 255, 220);
+}
+
+.btn-login:hover {
+    background-color: rgb(255, 130, 0);
+    border-color: rgb(255, 220, 50);
+    scale: 1.05;
+}
+
+.btn-login:active {
+    background-color: rgb(180, 70, 0);
+    scale: 0.96;
+}
+
+/* ---------- BOTÓ REGISTRAR (vermell/rosa) ---------- */
+.btn-register {
+    background-color: rgb(160, 20, 60);
+    border-color: rgb(255, 80, 120);
+    color: rgb(255, 220, 230);
+}
+
+.btn-register:hover {
+    background-color: rgb(200, 40, 80);
+    border-color: rgb(255, 120, 160);
+    scale: 1.05;
+}
+
+.btn-register:active {
+    background-color: rgb(120, 10, 40);
+    scale: 0.96;
+}
+
+/* ---------- ETIQUETA D'ESTAT ---------- */
+.status-label {
+    margin-top: 16px;
+    font-size: 15px;
+    -unity-font-style: bold-and-italic;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+    width: 380px;
+    -unity-text-align: upper-center;
+    min-height: 20px;
+}
+
+/* ---------- PEU DECORATIU (INSERT COIN) ---------- */
+.footer-label {
+    margin-top: 24px;
+    font-size: 12px;
+    color: rgb(255, 180, 0);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    letter-spacing: 3px;
+    opacity: 0.7;
+}
+
+/* ---------- BOMBES CANTONADES ---------- */
+.corner-bomb {
+    position: absolute;
+    font-size: 32px;
+}
+
+.corner-tl {
+    top: 16px;
+    left: 16px;
+}
+
+.corner-tr {
+    top: 16px;
+    right: 16px;
+}
+
+.corner-bl {
+    bottom: 16px;
+    left: 16px;
+}
+
+.corner-br {
+    bottom: 16px;
+    right: 16px;
+}
