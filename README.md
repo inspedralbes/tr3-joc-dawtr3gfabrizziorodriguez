@@ -145,9 +145,9 @@ npm start
 | WebSocket | ✅ Completo | 100% |
 | UI Menús | ✅ Completo | 100% |
 | Multijugador | ✅ Completo | 100% |
-| Modo Solo | 🟡 En progreso | 60% |
-| IA Bot | 🟡 En progreso | 40% |
-| Despliegue | 🔴 Pendiente | 0% |
+| Modo Solo | ✅ Completo | 100% |
+| IA Bot | ✅ Completo | 100% |
+| Despliegue | ✅ Completo | 100% |
 
 ---
 
