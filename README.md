@@ -165,29 +165,12 @@ stateDiagram-v2
     Scoreboard --> Menu : Volver
     SoloMode --> Game : Iniciar Bot
 ```
-
-## 🐛 Issues Conocidos
-
-- Los bots en modo individual necesitan optimización de pathfinding
-- La reconexión WebSocket intermitente requiere manejo mejorado
-- El sistema de matchmaking necesita balanceo de jugadores
-
----
-
 ## 📝 Próximos Pasos
 
 1. **Finalizar implementación del bot** con ML-Agents
 2. **Sistema de persistencia** para estadísticas de jugadores
 3. **Optimización de rendimiento** para partidas con 4+ jugadores
 4. **Despliegue en producción** con Docker y CI/CD
-
----
-
-## 📞 Contacto
-
-- **Desarrollador:** Fabrizzio Rodriguez Gonzales
-- **Proyecto:** TR3 - DAW
-- **Repositorio:** [GitHub](https://github.com/inspedralbes/tr3-joc-dawtr3gfabrizziorodriguez)
 
 ---
 
